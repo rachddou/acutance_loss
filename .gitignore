@@ -1,0 +1,8 @@
+*.pth
+*.png
+*.bmp
+*.jpg
+*.pdf
+*.h5
+*.tif
+*.pyc
