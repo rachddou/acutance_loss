@@ -12,9 +12,8 @@ import argparse
 import os
 from skimage.transform import pyramid_reduce
 from skimage.filters import gaussian
-import matplotlib.pyplot as plt
-from multiprocessing import Pool, Process
-import pandas as pd
+from multiprocessing import Pool
+
 
 # dict_instance = np.load('npy/dict.npy',allow_pickle=True)
 

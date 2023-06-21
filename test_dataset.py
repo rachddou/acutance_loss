@@ -10,7 +10,7 @@ from torch.autograd import Variable
 from src.models import FFDNet
 from src.acutance_loss import *
 from skimage.metrics import peak_signal_noise_ratio as compare_psnr
-from src.utils import batch_psnr,batch_ssim,batch_nlp, normalize, init_logger_ipol, \
+from src.utils import batch_ssim, normalize, init_logger_ipol, \
 				variable_to_cv2_image, remove_dataparallel_wrapper, is_rgb, compute_noise_map,rgb_2_grey_tensor
 
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"

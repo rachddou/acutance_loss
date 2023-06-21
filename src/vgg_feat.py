@@ -1,7 +1,5 @@
 import torch.nn as nn
-import torch
 from torchvision.models import vgg19
-import torchvision 
 
 '''
 EnhanceNet Implementation in PyTorch by Erik Quintanilla 

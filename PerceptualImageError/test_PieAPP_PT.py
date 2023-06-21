@@ -10,7 +10,6 @@ from utils.image_utils import *
 import argparse
 import os
 import skimage.io as skio
-import matplotlib.pyplot as plt
 from time import time
 ######## check for model and download if not present
 if not os.path.isfile('weights/PieAPPv0.1.pth'):

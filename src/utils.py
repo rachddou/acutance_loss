@@ -17,12 +17,10 @@ import logging
 import numpy as np
 import cv2
 import torch
-import matplotlib.pyplot as plt
-from skimage.io import imread,imsave
+from skimage.io import imsave
 from skimage.metrics import structural_similarity as ssim
 import torch.nn as nn
 from skimage.metrics import peak_signal_noise_ratio as compare_psnr
-from time import time
 from scipy.fftpack import dct
 
 def rgb_2_grey_tensor(tensor, train):
@@ -167,27 +165,6 @@ def batch_psnr(img, imclean, data_range):
         psnr += compare_psnr(imgclean[i, :, :, :], img_cpu[i, :, :, :], \
                        data_range=data_range)
     return psnr/img_cpu.shape[0]
-
-def batch_nlp(img, imclean):
-    r"""
-    Computes the PSNR along the batch dimension (not pixel-wise)
-
-    Args:
-        img: a `torch.Tensor` containing the restored image
-        imclean: a `torch.Tensor` containing the reference image
-        data_range: The data range of the input image (distance between
-            minimum and maximum possible values). By default, this is estimated
-            from the image data-type.
-    """
-    img_cpu = img.data.cpu().numpy().astype(np.float32)
-    imgclean = imclean.data.cpu().numpy().astype(np.float32)
-    nlp = 0
-    for i in range(img_cpu.shape[0]):
-        nlp += NLP_distance(imgclean[i, 0, :, :], img_cpu[i, 0, :, :])
-        nlp += NLP_distance(imgclean[i, 1, :, :], img_cpu[i, 1, :, :])
-        nlp += NLP_distance(imgclean[i, 2, :, :], img_cpu[i, 2, :, :])
-
-    return nlp/(3*img_cpu.shape[0])
 
 
 def batch_ssim(img, imclean):
@@ -409,52 +386,3 @@ def is_rgb(im_path):
     print("rgb: {}".format(rgb))
     print("im shape: {}".format(im.shape))
     return rgb
-
-
-if __name__ == "__main__":
-    t = time()
-    img = imread("input.png").transpose(2,0,1)/255.
-    img = img[:,50:100,300:350]
-    #img += np.random.normal(0,25./255,img.shape)
-    plt.imshow(img.transpose(1,2,0))
-    plt.show()
-    (C,H,W) = img.shape
-    print(img.shape)
-    test_img = torch.Tensor(img).view(1,C,H,W)
-    print(test_img.size())
-    #test_img = torch.randn((1,3,500,500))
-    w_size = 21
-    var_img = var_map(test_img,w_size)[0,0]
-    dct_img = dct_map(test_img)[0,0]
-    print(var_img.size())
-    #print(dct_img.size())
-    print(time()-t)
-    #plt.imshow(torch.Tensor(img).data.numpy())
-    #plt.show()
-    _, _, H, W = test_img.size()
-    noise_map = 1-(1-var_img)*dct_img
-    noise_map = noise_map.view(1,1,H,W)
-    noise_map = (noise_map - noise_map.min())/(noise_map.max()-noise_map.min())
-    noise_map = nn.functional.pad(noise_map,(4,4,4,4),mode = "replicate")
-    unfolded = torch.nn.Unfold(kernel_size=(9,9))(noise_map)
-    unfolded = unfolded.transpose(2,1)
-    noise_map_new = torch.median(unfolded,dim = -1,keepdim=True)[0].view((1,1,H,W))
-
-    noise_map_new = noise_map_new.data.numpy()
-    var_img = 1 - var_img.data.numpy()
-    dct_img = dct_img.data.numpy()
-
-    plt.imshow(var_img, cmap = "gray",vmin = 0, vmax = 1)
-    plt.show()
-    plt.imshow(dct_img, cmap = "gray",vmin = 0, vmax = 1)
-    plt.show()
-    noise_map = 1-(dct_img*var_img)
-    noise_map = (noise_map - noise_map.min())/(noise_map.max()-noise_map.min())
-    plt.imshow(noise_map, cmap = "gray",vmin = 0, vmax = 1)
-    plt.show()
-    plt.imshow(noise_map_new[0,0,:,:], cmap = "gray",vmin = 0, vmax = 1)
-    plt.show()
-
-    imsave("plots/dct_map_normalised.png", dct_img)
-    imsave("plots/var_map.png", var_img)
-    imsave("plots/noise_map_normalised.png", noise_map)

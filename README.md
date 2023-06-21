@@ -7,14 +7,29 @@ This repository is the official implementation of the paper *Hybrid Training of 
 ## Abstract
 In order to evaluate the capacity of a camera to render textures properly, the standard practice, used by classical scoring protocols, is to compute the frequential response to a dead leaves image target, from which is built a **texture acutance metric**. In this work, we propose a mixed training procedure for image restoration neural networks, relying on both natural and synthetic images, that yields a strong improvement of this acutance metric without impairing fidelity terms. The feasibility of the approach is demonstrated both on the denoising of RGB images and the full development of RAW images, opening the path to a systematic improvement of the texture acutance of real imaging devices.
 
-## Natural Image datasets
+## Prerequisities
+
+### Requirements
+To run this code, the following librearies are required:
+- tensorboardx ==2.2
+- torchvision==0.13.1
+- pytorch==1.13.1
+- scikit-image 
+- numpy
+- opencv 
+- h5py
+
+
+### Perceptual metric
+Download the weights for the Pieapp metric with the .sh scripts in the ```PerceptualImageError/scripts``` directory.
+### Natural Image datasets
 - Download the test datasets and move them in ```datasets/test_sets``` :
     - [[Kodak24](https://link.springer.com/chapter/10.1007/978-3-031-31975-4_24)]
     - [[CBSD68](https://github.com/clausmichele/CBSD68-dataset/tree/master/CBSD68/original)]
 
 - Download the Waterloo database , a natural image dataset :[[project page](https://ece.uwaterloo.ca/~k29ma/exploration/)] and put the images in ```datasets/src_imgs```
 
-## Dead leaves image datasets
+### Dead leaves image dataset
 
 In order to create the synthetic image dataset made of dead leaves images, run the following command: 
 ```
@@ -30,7 +45,7 @@ The total number of images created is the product  : $number_{process}\times num
 <span style="color:red">**WARNING:** </span>
 The dict.npy file takes quite a lot of RAM. In order to reduce this, you can reduce the maximal reduce when calling ```disk_dict``` in the ```launcher_data_generation.py``` file. Also, make sure that ```[NUMBER_PROCESS]``` is lower than the number of CPU cores available.
 
-## Dataset preprocessing
+### Dataset preprocessing
 
 Run the following commands to pre-process all the images and store them in a ```.h5``` file:
 ```

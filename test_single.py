@@ -9,10 +9,7 @@ from torch.autograd import Variable
 from src.models import FFDNet
 from src.utils import batch_psnr,batch_ssim, normalize, init_logger_ipol, \
                 variable_to_cv2_image, remove_dataparallel_wrapper, is_rgb, compute_noise_map
-import sys
 
-
-import skimage.io as skio
 from time import time
 
 def test_ffdnet(**args):
