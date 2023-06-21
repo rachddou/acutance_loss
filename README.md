@@ -78,3 +78,19 @@ python3 launcher_test.py --input datasets/test_sets/Kodak24/ --p TRAINING_LOGS/t
 ```
 python3 test_dataset.py --input datasets/test_sets/Kodak_24_dead_leaves/ --p TRAINING_LOGS/train_acutance_lambda_20/net.pth  --noise_sigma 25 --acutance --pieapp
 ```
+
+
+## Citation 
+
+If you make use of our work, please cite our paper:
+
+```
+@inproceedings{achddou2023hybrid,
+  title={Hybrid Training of Denoising Networks to Improve the Texture Acutance of Digital Cameras},
+  author={Achddou, Rapha{\"e}l and Gousseau, Yann and Ladjal, Sa{\"\i}d},
+  booktitle={International Conference on Scale Space and Variational Methods in Computer Vision},
+  pages={314--325},
+  year={2023},
+  organization={Springer}
+}
+```
