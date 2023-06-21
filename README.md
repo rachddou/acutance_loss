@@ -7,6 +7,11 @@ This repository is the official implementation of the paper *Hybrid Training of 
 ## Abstract
 In order to evaluate the capacity of a camera to render textures properly, the standard practice, used by classical scoring protocols, is to compute the frequential response to a dead leaves image target, from which is built a **texture acutance metric**. In this work, we propose a mixed training procedure for image restoration neural networks, relying on both natural and synthetic images, that yields a strong improvement of this acutance metric without impairing fidelity terms. The feasibility of the approach is demonstrated both on the denoising of RGB images and the full development of RAW images, opening the path to a systematic improvement of the texture acutance of real imaging devices.
 
+## Method
+
+Inspired by the initial results shown in the seminal paper [*Synthetic images as a regularity prior for image restoration neural networks*](https://hal.science/hal-03186499/file/papier_SSVM%20%281%29.pdf)(SSVM'21), we extend the mixed training strategy to include an acutance loss, which diagram is the following : 
+![](examples/schema_acutance.png)
+
 ## Prerequisities
 
 ### Requirements
@@ -69,7 +74,7 @@ To test the trained models, run the following command:
 python3 launcher_test.py --input datasets/test_sets/Kodak24/ --p TRAINING_LOGS/train_acutance_lambda_20/net.pth  --noise_sigma 25 --pieapp
 
 ```
-- for a synthetic dead leaves image dataset : 
+- for the synthetic dead leaves image datasets : 
 ```
 python3 test_dataset.py --input datasets/test_sets/Kodak_24_dead_leaves/ --p TRAINING_LOGS/train_acutance_lambda_20/net.pth  --noise_sigma 25 --acutance --pieapp
 ```
