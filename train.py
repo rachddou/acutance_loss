@@ -353,7 +353,7 @@ if __name__ == "__main__":
                         help="contrast reduction on dead leaves images")
     parser.add_argument("--natural_only", action='store_true',\
                         help="activates natural training only")
-    parser.add_argument("--filenames", "--fn", type=str, nargs = '+', default=['datasets/h5files/train_imnat/','datasets/h5files/train_dl/','datasets/h5files/val'], \
+    parser.add_argument("--filenames", "--fn", type=str, nargs = '+', default=['datasets/h5files/train_natural/','datasets/h5files/train_dead_leaves/','datasets/h5files/val'], \
                         help="How many times to perform data augmentation")
 
     parser.add_argument("--lambda_acutance","--l_ac",type=float, default=10, 	\
