@@ -15,7 +15,7 @@ Inspired by the initial results shown in the seminal paper [*Synthetic images as
 ## Prerequisities
 
 ### Requirements
-To run this code, the following librearies are required:
+To run this code, the following libraries are required:
 - tensorboardx ==2.2
 - torchvision==0.13.1
 - pytorch==1.13.1
@@ -23,6 +23,8 @@ To run this code, the following librearies are required:
 - numpy
 - opencv 
 - h5py
+
+  Run the ```pip install -r requirements.txt``` to install all these libraries.
 
 
 ### Perceptual metric
